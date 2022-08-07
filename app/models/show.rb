@@ -1,30 +1,40 @@
 class Show < ActiveRecord::Base
-        # .highest_rating
-        # returns the rating of the TV show with the highest rating
+    # returns the rating of the TV show with the highest rating
     def self.highest_rating
         self.maximum("rating")
+        # self.maximum(:rating)
     end
 
+    # returns the name of the TV show with the highest rating (FAILED - 2)
+    def self.most_popular_show
+        self.where("rating = ?", self.highest_rating).first
+    end
 
-# .most_popular_show
-#     returns the name of the TV show with the highest rating (FAILED - 2)
+    # returns the rating of the TV show with the lowest rating
+    # return the lowest value (minimum) of rating attribute
+    def self.lowest_rating
+        self.minimum(:rating)
+        # self.minimum("rating")
+    end
 
+    # returns the name of the TV show with the lowest rating 
+    def self.least_popular_show
+        self.where("rating = ?", self.lowest_rating).first
+    end
 
-#   .lowest_rating
-#     returns the rating of the TV show with the lowest rating (FAILED - 3)
+    # returns the sum of all the ratings of all the tv shows
+    def self.ratings_sum
+        # self.sum(:rating)
+        self.sum("rating")
+    end
 
+    # returns an array of all of the shows with a rating above 5
+    def self.popular_shows
+        self.where(["rating > ?", "5"])
+    end
 
-#   .least_popular_show
-#     returns the name of the TV show with the lowest rating (FAILED - 4)
-
-#   .ratings_sum
-#     returns the sum of all the ratings of all the tv shows (FAILED - 5)
-
-
-#   .popular_shows
-#     returns an array of all of the shows with a rating above 5 (FAILED - 6)
-
-
-#   .shows_by_alphabetical_order
-#     returns an array of all of the shows, listed in alphabetical order (FAILED - 7)
+    # returns an array of all of the shows, listed in alphabetical order
+    def self.shows_by_alphabetical_order
+        self.order(name: :asc)
+    end
 end
